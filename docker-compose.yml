@@ -2,22 +2,29 @@ version: "3"
 
 services:
   paddlehub:
-    image: lianshufeng/paddlehub
+    image: paddlespeech
+    # environment:
+      # - HTTP_PROXY=http://192.168.31.222:1080/
+      # - HTTPS_PROXY=http://192.168.31.222:1080/
+      # - NO_PROXY=localhost,127.0.0.1
     volumes:
       - "./work:/work"
-      - "./pip.conf:/root/.pip/pip.conf"
-      - "./cache/paddlehub:/root/.paddlehub"
-      - "./cache/paddlenlp:/root/.paddlenlp"
-      - "./cache/python/dist-packages:/usr/local/lib/python3.7/dist-packages"
+      - "./cache/tmp:/tmp"      
+      - "./cache/nltk_data:/root/.nltk_data/"
+      - "./cache/config:/root/.config/"
+      - "./cache/cache:/root/.cache/"
+      - "./cache/paddlenlp:/root/.paddlenlp/"
+      - "./cache/paddleaudio:/root/.paddleaudio/"
+      - "./cache/paddlespeech:/root/.paddlespeech/"
+      - "./cache/visualdl:/root/.visualdl/"
+      # - "./cache/python/dist-packages:/usr/local/lib/python3.7/dist-packages"
     ports:
-      - "9999:8888"
-    container_name: paddlehub
-    # restart: always
-    # command: bash ernie_zeus.sh
-    # command: bash ernie_vilg.sh
-    # command: bash ernie_gen_lover_words.sh
-    # command: bash ernie_gen_acrostic_poetry.sh
-    command: bash fastspeech2_baker.sh
+      - "8090-8099:8090-8099"
+    container_name: paddlespeech
+    restart: always
+    # command: python demo.py
+    # command: paddlespeech_server start --config_file /home/PaddleSpeech/paddlespeech/server/conf/application.yaml
+    command: paddlespeech_server start --config_file /home/PaddleSpeech/demos/streaming_tts_server/conf/tts_online_application.yaml
     
 
 

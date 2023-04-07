@@ -2,6 +2,10 @@ FROM paddlepaddle/paddle:2.4.2
 MAINTAINER lianshufeng <251708339@qq.com>
 
 
+# 添加 依赖
+Add ./ /docker
+
+
 RUN apt-get update -y \
   && apt-get install libsndfile-dev libsndfile1 -y \
   && apt-get clean -y \
@@ -9,7 +13,9 @@ RUN apt-get update -y \
 
 RUN git clone --depth 1 https://github.com/PaddlePaddle/PaddleSpeech.git /home/PaddleSpeech  
 RUN pip3 uninstall mccabe -y ; exit 0;
-RUN pip3 install multiprocess==0.70.12 importlib-metadata==4.2.0 dill==0.3.4
+
+#安装依赖
+RUN pip3 install -r /docker/requirements.txt
 
 WORKDIR /home/PaddleSpeech/
 RUN python setup.py bdist_wheel
@@ -17,8 +23,7 @@ RUN python setup.py bdist_wheel
 RUN pip install dist/*.whl
 
 
-# 添加 依赖
-Add ./ /docker
+#缓存模型包
 RUN bash /docker/script/install.sh
 
 
