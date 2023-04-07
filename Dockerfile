@@ -17,6 +17,11 @@ RUN python setup.py bdist_wheel
 RUN pip install dist/*.whl
 
 
+# 添加 依赖
+Add ./ /docker
+RUN bash /docker/script/install.sh
+
+
 # 工作目录
 WORKDIR /work
 
