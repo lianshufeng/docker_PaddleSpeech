@@ -2,9 +2,9 @@ FROM paddlepaddle/paddle:2.4.2
 MAINTAINER lianshufeng <251708339@qq.com>
 
 
-RUN apt-get update \
-  && apt-get install libsndfile-dev libsndfile1 \
-  && apt-get clean \
+RUN apt-get update -y \
+  && apt-get install libsndfile-dev libsndfile1 -y \
+  && apt-get clean -y \
   && rm -rf /var/lib/apt/lists/*
 
 RUN git clone --depth 1 https://github.com/PaddlePaddle/PaddleSpeech.git /home/PaddleSpeech  
